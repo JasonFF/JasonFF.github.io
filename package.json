@@ -20,7 +20,6 @@
     "url": "https://github.com/JasonFF/jasonff.github.io/issues"
   },
   "homepage": "https://github.com/JasonFF/jasonff.github.io#readme",
-
   "dependencies": {
     "babel-core": "^6.5.2",
     "babel-loader": "^6.2.1",
