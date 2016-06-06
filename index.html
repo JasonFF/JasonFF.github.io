@@ -87,9 +87,47 @@
             float: right;
             color: #000;
         }
+        #bg {
+            position: absolute;
+            z-index: 2;
+        }
+        #color {
+            position: absolute;
+            width: 100%;
+            top: 20%;
+            left: 20%;
+            animation: spin 15s linear infinite;
+            z-index: 1;
+        }
+        @keyframes spin {
+            to {
+                -webkit-transform: rotate(1turn);
+            }
+        }
+
+        @-webkit-keyframes spin {
+            to {
+                -webkit-transform: rotate(1turn);
+            }
+        }
+        #bg-div {
+            width: 1600px;
+            height: 1200px;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            margin-left: -800px;
+            margin-top: -600px;
+            z-index: -1;
+            overflow: hidden;
+        }
     </style>
 </head>
 <body>
+    <div id='bg-div'>
+        <img id='bg' src="./static/image/bg_transparent.png" alt="">
+        <img id='color' src="./static/image/color.png" alt="">
+    </div>
     <h1 id="title">JasonFF</h1>
     <section id="list"><ul>
         <li><a target="_blank" href="https://app.zeplin.io/projects.html">Zeplin</a></li>

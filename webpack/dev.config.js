@@ -9,9 +9,9 @@ var babelrc = fs.readFileSync('../.babelrc'); // 读取babelrc
 var babelrcObject = {};
 
 try {
-	babelrcObject = JSON.parse(babelrc);
+    babelrcObject = JSON.parse(babelrc);
 } catch (err) {
-	console.error(err);
+    console.error(err);
 }
 
 var babelrcObjectDevelopment = babelrcObject.env && babelrcObject.env.development || {};
@@ -24,21 +24,39 @@ var babelLoaderQuery = Object.assign({}, babelrcObjectDevelopment, babelrcObject
 delete babelLoaderQuery.env;
 
 module.exports = {
-	devtool: 'inline-sourece-map',
-	entry: './app/index.js',
-	output: {
-		path: path.join(__dirname,'dist'),
-		filename: 'bundle.js'
-	},
-	module: {
-		loaders: [
-			{ 
-				test: /\.jsx?$/, 
-				exclude: /node_modules/, 
-				loaders: ['babel','eslint-loader'],
-				query: babelLoaderQuery
-			},
-      		{ test: /\.scss$/, loader: 'style!css?modules&importLoaders=2&sourceMap&localIdentName=[local]___[hash:base64:5]!autoprefixer?browsers=last 2 version!sass?outputStyle=expanded&sourceMap' },
-		]
-	}
+    devtool: 'inline-sourece-map',
+    entry: './src/index.js',
+    output: {
+        path: path.join(__dirname,'dist'),
+        filename: 'bundle.js'
+    },
+    module: {
+        loaders: [
+            { 
+                test: /\.jsx?$/, 
+                exclude: /node_modules/, 
+                loaders: ['babel','eslint-loader'],
+                query: babelLoaderQuery
+            },
+            { test: /\.scss$/, loader: 'style!css?modules&importLoaders=2&sourceMap&localIdentName=[local]___[hash:base64:5]!autoprefixer?browsers=last 2 version!sass?outputStyle=expanded&sourceMap' },
+        ]
+    },
+    progress: true,
+    resolve: {
+        moduleDirectories: [
+            'src',
+            'node_modules'
+        ],
+        extensions: ['','.js','.jsx']
+    },
+    plugins: [
+        new webpack.HotModuleReplacementPlugin(),
+        new webpack.IgnorePlugin(/webpack-stats\.json$/),
+        new webpack.DefinePlugin({
+            __CLIENT__: true,
+            __SERVER__: false,
+            __DEVELOPMENT__: true,
+            __DEVTOOLS__: true  // <-------- DISABLE redux-devtools HERE
+        })
+    ]
 }
